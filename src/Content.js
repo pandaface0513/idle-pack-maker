@@ -39,6 +39,16 @@ class Content extends Component {
         //console.log("Download is clicked");
 
         // TODO: Download code....
+        if (this.state.tempObject.Objects.length > 0) {
+            let json_string = JSON.stringify(this.state.tempObject, undefined, 2);
+            let link = document.createElement('a');
+            let blob = new Blob([json_string], {type: 'text/plain'});
+            link.download = 'data.json';
+            link.href = window.URL.createObjectURL(blob);
+            link.click();
+        } else {
+            alert("Nothing to generate.")
+        }
     }
 
     render() {
@@ -57,8 +67,9 @@ class Content extends Component {
                     {sectionList}
                 </div>
                 <div id="Result-Container">
+                    <h4>| Result Configurations |</h4>
                     <textarea rows="25" cols="100" placeholder="add objects above and then press generate."
-                        value={this.state.tempObject.Objects.length > 0 ? JSON.stringify(this.state.tempObject) : ""} readOnly/>
+                        value={this.state.tempObject.Objects.length > 0 ? JSON.stringify(this.state.tempObject, undefined, 2) : ""} readOnly/>
                     <br/>
                     <button onClick={this._OnGenerate}>Generate</button>
                     |
