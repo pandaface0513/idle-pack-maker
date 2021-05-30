@@ -25,7 +25,7 @@ class Item extends Component {
     }
 
     _fieldOnChange(name, value) {
-        console.log(`Item:OnChange - ${name} - ${value}`);
+        //console.log(`Item:OnChange - ${name} - ${value}`);
         this.props.SuperItemChange(this.props.data.id, name, value);
     }
 
@@ -52,7 +52,7 @@ class Item extends Component {
             DataList.push(newDataEntry);
         }
 
-        //console.log(DataList);
+        ////console.log(DataList);
         
         let FieldList = DataList.map(
             (data, index) => {

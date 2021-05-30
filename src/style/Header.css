@@ -1,0 +1,31 @@
+a.nav-button {
+    font-family: 'Sigmar One', cursive;
+    display: inline-block;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    width: 50%;
+    font-size: 1.25rem;;
+    box-sizing: border-box;
+    border-bottom: 0.1px grey solid;
+}
+
+a.nav-button.selected,
+a.nav-button:hover {
+    color: white;
+    background-color: lightsalmon;
+}
+
+a.nav-button.selected {
+    background-color: salmon;
+}
+
+.tagline {
+    font-size: 0.85rem;
+    margin: 0;
+    width: 100%;
+    padding: 0.5rem;
+    font-style: italic;
+    color: white;
+    background-color: lightslategrey;
+}

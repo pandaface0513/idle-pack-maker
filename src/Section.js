@@ -46,7 +46,7 @@ class Section extends Component {
         newItem.id = Math.random() * 100000 + Date.now();
         
         this.props.SuperAddItem(this.props.data.title, newItem);
-        //console.log(newItem);
+        ////console.log(newItem);
     }
 
     handleRemoveClick(removedId) {
@@ -55,7 +55,7 @@ class Section extends Component {
 
     _OnItemUpdate(item, field, value) {
         //
-        console.log(`Section:OnChange - ${item} - ${field} - ${value}`);
+        //console.log(`Section:OnChange - ${item} - ${field} - ${value}`);
         this.props.SuperSectionChange(this.props.data.title, item, field, value);
     }
 
@@ -67,8 +67,8 @@ class Section extends Component {
         let section = this.props.data;
         let itemList = section.items.map(
             (item) => {
-                //console.log("----- Drawing Items -----");
-                console.log(item);
+                ////console.log("----- Drawing Items -----");
+                //console.log(item);
 
                 let itemData = {};
 
@@ -88,7 +88,7 @@ class Section extends Component {
                 }
                 itemData.id = item.id;
 
-                //console.log(itemData);
+                ////console.log(itemData);
 
                 return (
                     <Item key={itemData.id} data={itemData} handleRemoveClick={this.handleRemoveClick} SuperItemChange={this._OnItemUpdate}/>

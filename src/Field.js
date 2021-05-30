@@ -19,7 +19,7 @@ class Field extends Component {
     }
 
     _OnChange(event) {
-        console.log(`Field:OnChange - ${event.target.name} - ${event.target.value}`);
+        //console.log(`Field:OnChange - ${event.target.name} - ${event.target.value}`);
         this.props.SuperOnChange(event.target.name, event.target.value);
     }
 
@@ -44,7 +44,8 @@ class Field extends Component {
             case FieldType.DROPDOWN:
             case FieldType.ICON_DROPDOWN:
             {
-                bNotADropdown = false;   
+                bNotADropdown = false;
+                break;
             }
             default:
             {
@@ -79,7 +80,7 @@ class Field extends Component {
                 {field ? field.name : "undefined"} : 
                 {bNotADropdown ? 
                     <input name={field.name} type={type} value={field.value} onChange={this._OnChange}/> : 
-                    <select onChange={this._OnChange}>
+                    <select name={field.name} onChange={this._OnChange}>
                         {dropdownList}
                     </select>}
             </div>

@@ -1,5 +1,5 @@
 .App {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   text-align: center;
   font-size: 20px;
   transition: top .8s cubic-bezier(.77, 0, .175, 1);

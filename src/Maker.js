@@ -3,9 +3,9 @@ import { DataWrapper } from './def/type';
 
 import Section from './Section';
 
-import './style/Content.css';
+import './style/Maker.css';
 
-class Content extends Component {
+class Maker extends Component {
     constructor(props) {
         super(props);
 
@@ -32,11 +32,11 @@ class Content extends Component {
     }
 
     _OnGenerate(event) {
-        //console.log(this.state.tempObject);
+        ////console.log(this.state.tempObject);
     }
 
     _OnDownload(event) {
-        //console.log("Download is clicked");
+        ////console.log("Download is clicked");
 
         // TODO: Download code....
         if (this.state.sections.length > 0) {
@@ -67,7 +67,7 @@ class Content extends Component {
         if (file != null) {
             if (accept.indexOf(file.type) > -1) {
                 // file is of type text, let's read it
-                console.log(this);
+                //console.log(this);
                 let reader = new FileReader();
                 reader.onload = this._fileLoaded;
                 reader.onload.bind(this);
@@ -76,17 +76,17 @@ class Content extends Component {
             else {
                 alert("We don't accept this file. Please retry.");
                 alert(file.type);
-                console.log(file);
+                //console.log(file);
             }
         }
     }
 
     _fileLoaded(event) {
-        console.log("----- File Loaded -----");
-        console.log(event.target.result);
+        //console.log("----- File Loaded -----");
+        //console.log(event.target.result);
 
         let parse = JSON.parse(event.target.result);
-        console.log(parse);
+        //console.log(parse);
 
         if (parse.hasOwnProperty("version") && DataWrapper.version === parse.version) {
             this.setState({
@@ -100,21 +100,21 @@ class Content extends Component {
 
     _OnSectionUpdate(sectionTitle, itemId, fieldName, value) {
         //
-        //console.log(`Content:OnChange - ${sectionTitle} - ${itemId} - ${fieldName} - ${value}`);
+        ////console.log(`Content:OnChange - ${sectionTitle} - ${itemId} - ${fieldName} - ${value}`);
         let MutableSections = this.state.sections;
         let bDirty = false;
 
         for (let section of MutableSections) {
             if (section.title === sectionTitle) {
-                //console.log(`Found ${section.title}`);
-                //console.log(section.items);
+                ////console.log(`Found ${section.title}`);
+                ////console.log(section.items);
                 for (let item of section.items) {
-                    //console.log(`comparing ${item.id} vs ${itemId}`);
+                    ////console.log(`comparing ${item.id} vs ${itemId}`);
                     if (item.id === itemId) {
-                        //console.log(`Found ${item.id}`);
+                        ////console.log(`Found ${item.id}`);
                         for (let property in item) {
                             if (property === fieldName) {
-                                //console.log(`Found ${param.name}`)
+                                ////console.log(`Found ${param.name}`)
                                 item[property].value = value;
                                 bDirty = true;
                             }
@@ -207,4 +207,4 @@ class Content extends Component {
     }
 }
 
-export default Content;
+export default Maker;

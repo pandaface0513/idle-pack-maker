@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { States } from './def/config';
 
 import './style/Header.css';
 
@@ -10,21 +11,40 @@ class Header extends Component {
             title: "",
             tagline: ""
         }
+
+        this._GoToHub = this._GoToHub.bind(this);
+        this._GoToMaker = this._GoToMaker.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            title: "Hub Pack Maker",
-            tagline: "Use this to create a hub pack configuration."
-        });
+    }
+
+    _GoToHub(event) {
+        this.props.SuperNavigationChange(0);
+        event.preventDefault();
+    }
+
+    _GoToMaker(event) {
+        this.props.SuperNavigationChange(1);
+        event.preventDefault();
     }
 
     render() {
+        let displayText, displayTagline;
+        let currentStateId = this.props.data.states[this.props.data.currentState];
+
+        for (let state of States) {
+            if (state.id === currentStateId) {
+                displayText = state.title;
+                displayTagline = state.tagline;
+            }
+        }
+
         return (
             <header>
-                <h1>{this.state.title}</h1>
-                <p>{this.state.tagline}</p>
-                <hr/>
+                <a className={currentStateId === "Hub" ? "nav-button selected" : "nav-button"} onClick={this._GoToHub}>Hub</a>
+                <a className={currentStateId === "Maker" ? "nav-button selected" : "nav-button"} onClick={this._GoToMaker}>Maker</a> 
+                <p className="tagline">{displayTagline}</p>
             </header>
         )
     }
