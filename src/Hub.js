@@ -10,7 +10,6 @@ class Hub extends Component {
         super(props);
         
         this.state = {
-            links: []
         }
 
         this._OnUpload = this._OnUpload.bind(this);
@@ -58,17 +57,14 @@ class Hub extends Component {
         //console.log(parse);
 
         if (parse.hasOwnProperty("version") && DataWrapper.version === parse.version) {
-            this.setState({
-                links: parse.Objects[0].items
-            });
-            this.setState({});
+            this.props.SuperUploadToApp(parse);
         } else {
             alert("The file version is outdated.");
         }
     }
 
     render() {
-        let gridList = this.state.links.map(
+        let gridList = this.props.data.Objects[0].items.map(
             (link) => {
                 return (
                     <Link key={link.id} data={link} />

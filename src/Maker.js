@@ -17,8 +17,10 @@ class Maker extends Component {
         this._OnUpload = this._OnUpload.bind(this);
         this._fileSelected = this._fileSelected.bind(this);
         this._fileLoaded = this._fileLoaded.bind(this);
+
         this._OnGenerate = this._OnGenerate.bind(this);
         this._OnDownload = this._OnDownload.bind(this);
+        this._OnApply = this._OnApply.bind(this);
 
         this._OnSectionUpdate = this._OnSectionUpdate.bind(this);
         this._OnSectionAddItem = this._OnSectionAddItem.bind(this);
@@ -33,6 +35,12 @@ class Maker extends Component {
 
     _OnGenerate(event) {
         ////console.log(this.state.tempObject);
+    }
+
+    _OnApply(event) {
+        let objectWrapper = DataWrapper;
+        objectWrapper.Objects = this.state.sections;
+        this.props.SuperApplyToHub(objectWrapper);
     }
 
     _OnDownload(event) {
@@ -200,7 +208,7 @@ class Maker extends Component {
                     <textarea rows="25" cols="100" placeholder="add objects above and then press generate."
                         value={this.state.sections.length > 0 ? JSON.stringify(this.state.sections, undefined, 2) : ""} readOnly/>
                     <br/>
-                    <button onClick={this._OnGenerate}>Generate</button> | <button onClick={this._OnDownload}>Download</button>
+                    <button onClick={this._OnDownload}>Download</button> | <button onClick={this._OnApply}>Apply to Hub</button>
                     <br/>
                 </div>
             </React.Fragment>

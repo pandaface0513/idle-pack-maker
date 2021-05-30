@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { DataWrapper } from './def/type'
+
 import Header from './Header';
 import Maker from "./Maker";
 import Hub from "./Hub";
@@ -11,10 +13,13 @@ class App extends Component {
 
     this.state = {
       states: ["Hub", "Maker"],
-      currentState: 0
+      currentState: 0,
+      temp: DataWrapper
     };
 
     this._OnNavigationChange = this._OnNavigationChange.bind(this);
+    this._OnApplyMakerConfig = this._OnApplyMakerConfig.bind(this);
+    this._OnUploadToApp = this._OnUploadToApp.bind(this);
   }
 
   componentDidMount() {
@@ -29,11 +34,26 @@ class App extends Component {
     )
   }
 
+  _OnApplyMakerConfig(makerConfig) {
+    this.setState({
+      currentState: 0,
+      temp: makerConfig
+    });
+  }
+
+  _OnUploadToApp(externalConfig) {
+    this.setState({
+      temp: externalConfig
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Header data={this.state} SuperNavigationChange={this._OnNavigationChange} />
-        {this.state.currentState === 0 ? <Hub /> : <Maker />}
+        {this.state.currentState === 0 ? 
+        <Hub data={this.state.temp} SuperUploadToApp={this._OnUploadToApp} /> : 
+        <Maker data={this.state.temp} SuperApplyToHub={this._OnApplyMakerConfig}/>}
       </div>
     )
   }
