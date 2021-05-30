@@ -4,3 +4,11 @@
   font-size: 20px;
   transition: top .8s cubic-bezier(.77, 0, .175, 1);
 }
+
+button {
+  padding: 1.15rem;
+  color: white;
+  background-color: salmon;
+  cursor: pointer;
+  text-transform: uppercase;
+}

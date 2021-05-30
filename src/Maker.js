@@ -189,6 +189,7 @@ class Maker extends Component {
 
         return (
             <React.Fragment>
+                <p>If you have existing config file, you can upload it.</p>
                 <input type="file" id="input" onChange={this._fileSelected} accept="application/json" style={{display: 'none'}}></input><button onClick={this._OnUpload}>Upload Existing</button>
                 <hr/>
                 <div id="Sections-Container">

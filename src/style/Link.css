@@ -1,0 +1,10 @@
+.Link-Item {
+    display: inline-block;
+    flex: 1;
+    background-color: lightgray;
+    color: white;
+    cursor: pointer;
+    padding: 2rem;
+    margin: 0.5rem;
+    font-style: 1.5rem;
+}

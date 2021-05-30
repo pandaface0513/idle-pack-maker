@@ -8,8 +8,6 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            title: "",
-            tagline: ""
         }
 
         this._GoToHub = this._GoToHub.bind(this);
@@ -30,12 +28,11 @@ class Header extends Component {
     }
 
     render() {
-        let displayText, displayTagline;
+        let displayTagline;
         let currentStateId = this.props.data.states[this.props.data.currentState];
 
         for (let state of States) {
             if (state.id === currentStateId) {
-                displayText = state.title;
                 displayTagline = state.tagline;
             }
         }
