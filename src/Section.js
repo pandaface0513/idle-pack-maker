@@ -9,9 +9,7 @@ class Section extends Component {
         super(props);
 
         this.state = {
-            section: props.data,
-            itemList: [],
-            sectionObject: null,
+            section: props.data
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -36,10 +34,9 @@ class Section extends Component {
     }
 
     handleClick(event) {
-        let itemList = this.state.itemList;
-        let params = this.state.section.params;
+        let template = this.state.section.template;
         let newItem = {};
-        for (let param of params)
+        for (let param of template)
         {
             newItem[param.name] = {
                 type: param.type,
@@ -48,36 +45,12 @@ class Section extends Component {
         }
         newItem.id = Math.random() * 100000 + Date.now();
         
-        itemList.push(newItem);
-
-        this.setState({
-            itemList: itemList
-        });
-
+        this.props.SuperAddItem(this.props.data.title, newItem);
         //console.log(newItem);
     }
 
     handleRemoveClick(removedId) {
-        this.setState({
-            itemList: this._filterFromList(removedId, this.state.itemList)
-        });
-
-        let items = this.state.sectionObject.items;
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].id === removedId) {
-                items.splice(i , 1);
-            }
-        }
-    }
-
-    _filterFromList(removedId, listToFilter) {
-        let filtered = listToFilter.filter(
-            value => {
-                return !(value.id === removedId);
-            }
-        );
-
-        return filtered;
+        this.props.SuperRemoveItem(this.props.data.title, removedId);
     }
 
     _OnItemUpdate(item, field, value) {
@@ -94,25 +67,31 @@ class Section extends Component {
         let section = this.props.data;
         let itemList = section.items.map(
             (item) => {
-                console.log("----- Drawing Items -----");
+                //console.log("----- Drawing Items -----");
                 console.log(item);
 
                 let itemData = {};
 
-                for (let param of item.params)
+                for (let param of section.template)
                 {
                     itemData[param.name] = {
                         type: param.type,
                         placeholder: param.defaultValue,
                         value: param.value
                     };
+
+                    for (let property in item) {
+                        if (property === param.name) {
+                            itemData[param.name].value = item[property].value;
+                        }
+                    }
                 }
                 itemData.id = item.id;
 
-                console.log(itemData);
+                //console.log(itemData);
 
                 return (
-                    <Item key={itemData.id} data={itemData} handleRemoveClick={this.handleRemoveClick} temp={this.state.sectionObject} SuperItemChange={this._OnItemUpdate}/>
+                    <Item key={itemData.id} data={itemData} handleRemoveClick={this.handleRemoveClick} SuperItemChange={this._OnItemUpdate}/>
                 )
             }
         )

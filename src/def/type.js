@@ -31,7 +31,7 @@ export const IconType = {
 
 export const HyperlinkObject = {
     title: ObjectType.HYPERLINK,
-    params: [
+    template: [
         {
             name: "id",
             type: FieldType.UID,

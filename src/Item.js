@@ -10,8 +10,7 @@ class Item extends Component {
 
         this.state = {
             item: props.data,
-            itemName: props.data.Name.value,
-            itemObject: null,
+            itemName: props.data.Name.value
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -19,18 +18,6 @@ class Item extends Component {
     }
 
     componentDidMount() {
-        if (this.props.temp && this.props.temp.items) {
-            let newItemObject = {
-                id: this.state.item.id,
-                params: []
-            }
-
-            this.props.temp.items.push(newItemObject);
-
-            this.setState({
-                itemObject: newItemObject
-            });
-        }
     }
 
     handleClick(event) {

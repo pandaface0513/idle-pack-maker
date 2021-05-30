@@ -12,9 +12,6 @@ class Content extends Component {
         this.state = {
             sections: [],
             currentSection: null,
-            tempObject: {
-                Objects: []
-            },
         }
 
         this._OnUpload = this._OnUpload.bind(this);
@@ -24,6 +21,8 @@ class Content extends Component {
         this._OnDownload = this._OnDownload.bind(this);
 
         this._OnSectionUpdate = this._OnSectionUpdate.bind(this);
+        this._OnSectionAddItem = this._OnSectionAddItem.bind(this);
+        this._OnSectionRemoveItem = this._OnSectionRemoveItem.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +39,7 @@ class Content extends Component {
         //console.log("Download is clicked");
 
         // TODO: Download code....
-        if (this.state.tempObject.Objects.length > 0) {
+        if (this.state.sections.length > 0) {
             let objectWrapper = {
                 Objects: this.state.sections
             }
@@ -98,22 +97,22 @@ class Content extends Component {
 
     _OnSectionUpdate(sectionTitle, itemId, fieldName, value) {
         //
-        console.log(`Content:OnChange - ${sectionTitle} - ${itemId} - ${fieldName} - ${value}`);
+        //console.log(`Content:OnChange - ${sectionTitle} - ${itemId} - ${fieldName} - ${value}`);
         let MutableSections = this.state.sections;
         let bDirty = false;
 
         for (let section of MutableSections) {
             if (section.title === sectionTitle) {
-                console.log(`Found ${section.title}`);
-                console.log(section.items);
+                //console.log(`Found ${section.title}`);
+                //console.log(section.items);
                 for (let item of section.items) {
-                    console.log(`comparing ${item.id} vs ${itemId}`);
+                    //console.log(`comparing ${item.id} vs ${itemId}`);
                     if (item.id === itemId) {
-                        console.log(`Found ${item.id}`);
-                        for (let param of item.params) {
-                            if (param.name === fieldName) {
-                                console.log(`Found ${param.name}`)
-                                param.value = value;
+                        //console.log(`Found ${item.id}`);
+                        for (let property in item) {
+                            if (property === fieldName) {
+                                //console.log(`Found ${param.name}`)
+                                item[property].value = value;
                                 bDirty = true;
                             }
                         }
@@ -129,12 +128,58 @@ class Content extends Component {
         }
     }
 
+    _OnSectionAddItem(sectionTitle, itemObj) {
+        let MutableSections = this.state.sections;
+        let bDirty = false;
+
+        for (let section of MutableSections) {
+            if (section.title === sectionTitle) {
+                section.items.push(itemObj);
+                bDirty = true;
+            }
+        }
+
+        if (bDirty) {
+            this.setState({
+                sections: MutableSections
+            })
+        }
+    }
+
+    _OnSectionRemoveItem(sectionTitle, itemId) {
+        let MutableSections = this.state.sections;
+        let bDirty = false;
+
+        for (let section of MutableSections) {
+            if (section.title === sectionTitle) {
+                section.items = this._filterFromList(itemId, section.items);
+                bDirty = true;
+            }
+        }
+
+        if (bDirty) {
+            this.setState({
+                sections: MutableSections
+            })
+        }
+    }
+
+    _filterFromList(removedId, listToFilter) {
+        let filtered = listToFilter.filter(
+            value => {
+                return !(value.id === removedId);
+            }
+        );
+
+        return filtered;
+    }
+
     render() {
         let sections = this.state.sections;
         let sectionList = sections.map(
             (section) => {
                 return (
-                    <Section key={section.title} data={section} objList={this.state.tempObject.Objects} SuperSectionChange={this._OnSectionUpdate}/>
+                    <Section key={section.title} data={section} SuperSectionChange={this._OnSectionUpdate} SuperAddItem={this._OnSectionAddItem} SuperRemoveItem={this._OnSectionRemoveItem}/>
                 )
             }
         );
@@ -149,7 +194,7 @@ class Content extends Component {
                 <div id="Result-Container">
                     <h4>| Result Configurations |</h4>
                     <textarea rows="25" cols="100" placeholder="add objects above and then press generate."
-                        value={this.state.tempObject.Objects.length > 0 ? JSON.stringify(this.state.sections, undefined, 2) : ""} readOnly/>
+                        value={this.state.sections.length > 0 ? JSON.stringify(this.state.sections, undefined, 2) : ""} readOnly/>
                     <br/>
                     <button onClick={this._OnGenerate}>Generate</button> | <button onClick={this._OnDownload}>Download</button>
                     <br/>
