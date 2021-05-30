@@ -189,6 +189,10 @@ export const QuestObject = {
     ]
 }
 
-export const Objects = [HyperlinkObject];
-
+export const DataWrapper = {
+    version: 1,
+    Objects: [
+        HyperlinkObject
+    ]
+}
 //export const Objects = [ResourceObject, AccumulatorObject, QuestObject];

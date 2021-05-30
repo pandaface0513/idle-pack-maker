@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Objects } from './def/type';
+import { DataWrapper } from './def/type';
 
 import Section from './Section';
 
@@ -27,7 +27,7 @@ class Content extends Component {
 
     componentDidMount() {
         this.setState({
-            sections: Objects
+            sections: DataWrapper.Objects
         })
     }
 
@@ -40,9 +40,8 @@ class Content extends Component {
 
         // TODO: Download code....
         if (this.state.sections.length > 0) {
-            let objectWrapper = {
-                Objects: this.state.sections
-            }
+            let objectWrapper = DataWrapper;
+            objectWrapper.Objects = this.state.sections;
             let json_string = JSON.stringify(objectWrapper, undefined, 2);
             let link = document.createElement('a');
             let blob = new Blob([json_string], {type: 'text/plain'});
@@ -83,16 +82,20 @@ class Content extends Component {
     }
 
     _fileLoaded(event) {
-        console.log("----- File Read -----");
+        console.log("----- File Loaded -----");
         console.log(event.target.result);
 
         let parse = JSON.parse(event.target.result);
         console.log(parse);
 
-        this.setState({
-            sections: parse.Objects
-        });
-        this.setState({});
+        if (parse.hasOwnProperty("version") && DataWrapper.version === parse.version) {
+            this.setState({
+                sections: parse.Objects
+            });
+            this.setState({});
+        } else {
+            alert("The file version is outdated.");
+        }
     }
 
     _OnSectionUpdate(sectionTitle, itemId, fieldName, value) {
