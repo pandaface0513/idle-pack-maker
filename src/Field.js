@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FieldType } from './def/type';
+import { FieldType, IconType } from './def/type';
 import './style/Field.css';
 
 class Field extends Component {
@@ -46,6 +46,8 @@ class Field extends Component {
     render() {
         let field = this.state.field;
         let type = "";
+        let bNotADropdown = true;
+        let dropdownList = "";
 
         switch (field.type)
         {
@@ -59,15 +61,47 @@ class Field extends Component {
                 type = "number";
                 break;
             }
+            case FieldType.DROPDOWN:
+            case FieldType.ICON_DROPDOWN:
+            {
+                bNotADropdown = false;   
+            }
             default:
             {
                 type = "text";
             }
         }
 
+        if (!bNotADropdown) {
+            if (field.type === FieldType.ICON_DROPDOWN) {
+                let listOfOptions = [];
+                for (let icon in IconType) {
+                    listOfOptions.push(
+                        {
+                            name: icon,
+                            value: IconType[icon]
+                        }
+                    );
+                }
+                dropdownList = listOfOptions.map(
+                    (data, index) => {
+                        let UKey = index+"_icon";
+                        return (
+                            <option key={UKey}>{data.name}</option> 
+                        )
+                    } 
+                );
+            }
+        }
+
         return (
             <div className="Field">
-                {field ? field.name : "1"} : <input name={field.name} type={type} placeholder={field.value} onChange={this._OnChange}/>
+                {field ? field.name : "undefined"} : 
+                {bNotADropdown ? 
+                    <input name={field.name} type={type} placeholder={field.value} onChange={this._OnChange}/> : 
+                    <select onChange={this._OnChange}>
+                        {dropdownList}
+                    </select>}
             </div>
         )
     }

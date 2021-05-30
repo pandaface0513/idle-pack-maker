@@ -14,8 +14,8 @@ class Header extends Component {
 
     componentDidMount() {
         this.setState({
-            title: "Idle Pack Maker",
-            tagline: "Use this to create an idle pack configuration."
+            title: "Hub Pack Maker",
+            tagline: "Use this to create a hub pack configuration."
         });
     }
 
