@@ -19,7 +19,7 @@ class Item extends Component {
     }
 
     componentDidMount() {
-        if (this.props.temp.items) {
+        if (this.props.temp && this.props.temp.items) {
             let newItemObject = {
                 id: this.state.item.id,
                 params: []
@@ -38,11 +38,8 @@ class Item extends Component {
     }
 
     _fieldOnChange(name, value) {
-        if (name.toLowerCase() === "name") {
-            this.setState({
-                itemName: value
-            });
-        }
+        console.log(`Item:OnChange - ${name} - ${value}`);
+        this.props.SuperItemChange(this.props.data.id, name, value);
     }
 
     render() {
@@ -50,8 +47,8 @@ class Item extends Component {
             return <></>;
         }
 
-        let Item = this.state.item;
-        let ItemName = this.state.itemName === PlaceholderValue.NONE ? "undefined" : this.state.itemName;
+        let Item = this.props.data;
+        let ItemName = Item.Name.value === PlaceholderValue.NONE ? "undefined" : Item.Name.value;
 
         let DataList = [];
         for (let Property in Item)
@@ -74,7 +71,7 @@ class Item extends Component {
             (data, index) => {
                 let UKey = index+"_"+Item["id"];
                 return (
-                    <Field key={UKey} data={data} temp={this.state.itemObject} superOnChange={this._fieldOnChange}/>
+                    <Field key={UKey} data={data} temp={this.state.itemObject} SuperOnChange={this._fieldOnChange}/>
                 )
             } 
         );

@@ -16,13 +16,15 @@ class Section extends Component {
 
         this.handleClick = this.handleClick.bind(this);
         this.handleRemoveClick = this.handleRemoveClick.bind(this);
+        this._OnItemUpdate = this._OnItemUpdate.bind(this);
     }
 
     componentDidMount() {
         if (this.props.objList) {
             let newSectionObject = {
-                name: this.state.section.title,
-                items: []
+                title: this.state.section.title,
+                params: this.state.section.params,
+                items: this.state.section.items
             }
 
             this.props.objList.push(newSectionObject);
@@ -78,12 +80,39 @@ class Section extends Component {
         return filtered;
     }
 
+    _OnItemUpdate(item, field, value) {
+        //
+        console.log(`Section:OnChange - ${item} - ${field} - ${value}`);
+        this.props.SuperSectionChange(this.props.data.title, item, field, value);
+    }
+
     render() {
-        let section = this.state.section;
-        let itemList = this.state.itemList.map(
-            (param) => {
+        if (this.props.data === null) {
+            return <></>;
+        }
+
+        let section = this.props.data;
+        let itemList = section.items.map(
+            (item) => {
+                console.log("----- Drawing Items -----");
+                console.log(item);
+
+                let itemData = {};
+
+                for (let param of item.params)
+                {
+                    itemData[param.name] = {
+                        type: param.type,
+                        placeholder: param.defaultValue,
+                        value: param.value
+                    };
+                }
+                itemData.id = item.id;
+
+                console.log(itemData);
+
                 return (
-                    <Item key={param.id} data={param} handleRemoveClick={this.handleRemoveClick} temp={this.state.sectionObject}/>
+                    <Item key={itemData.id} data={itemData} handleRemoveClick={this.handleRemoveClick} temp={this.state.sectionObject} SuperItemChange={this._OnItemUpdate}/>
                 )
             }
         )

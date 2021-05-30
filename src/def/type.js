@@ -36,28 +36,34 @@ export const HyperlinkObject = {
             name: "id",
             type: FieldType.UID,
             defaultValue: PlaceholderValue.NONE,
+            value: PlaceholderValue.NONE
         },
         {
             name: "Size",
             type: FieldType.NUMBER,
             defaultValue: 1,
+            value: 1
         },
         {
             name: "Name",
             type: FieldType.NAME,
             defaultValue: PlaceholderValue.NONE,
+            value: PlaceholderValue.NONE
         },
         {
             name: "Url",
             type: FieldType.URL,
             defaultValue: PlaceholderValue.NONE,
+            value: PlaceholderValue.NONE
         },
         {
             name: "Icon",
             type: FieldType.ICON_DROPDOWN,
-            defaultValue: PlaceholderValue.NONE,
+            defaultValue: IconType.DEFAULT,
+            value: IconType.DEFAULT
         },
-    ]
+    ],
+    items: []
 }
 
 export const ResourceObject = {

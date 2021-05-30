@@ -34,17 +34,18 @@ class Field extends Component {
     _OnChange(event) {
         //console.log('Input ' + event.target.name + ' changed: ' + event.target.value);
 
-        this.state.fieldObject.value = event.target.value;
+        //this.state.fieldObject.value = event.target.value;
 
-        this.setState({
-            value: event.target.value
-        });
+        //this.setState({
+        //    value: event.target.value
+        //});
 
-        this.props.superOnChange(event.target.name, event.target.value);
+        console.log(`Field:OnChange - ${event.target.name} - ${event.target.value}`);
+        this.props.SuperOnChange(event.target.name, event.target.value);
     }
 
     render() {
-        let field = this.state.field;
+        let field = this.props.data;
         let type = "";
         let bNotADropdown = true;
         let dropdownList = "";
@@ -98,7 +99,7 @@ class Field extends Component {
             <div className="Field">
                 {field ? field.name : "undefined"} : 
                 {bNotADropdown ? 
-                    <input name={field.name} type={type} placeholder={field.value} onChange={this._OnChange}/> : 
+                    <input name={field.name} type={type} value={field.value} onChange={this._OnChange}/> : 
                     <select onChange={this._OnChange}>
                         {dropdownList}
                     </select>}
