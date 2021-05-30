@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FieldType, Objects } from './def/type';
+import { Objects } from './def/type';
 
 import Section from './Section';
 
@@ -18,6 +18,7 @@ class Content extends Component {
         }
 
         this._OnGenerate = this._OnGenerate.bind(this);
+        this._OnDownload = this._OnDownload.bind(this);
     }
 
     componentDidMount() {
@@ -27,11 +28,17 @@ class Content extends Component {
     }
 
     _OnGenerate(event) {
-        console.log(this.state.tempObject);
+        //console.log(this.state.tempObject);
 
         this.setState({
             tempObject: this.state.tempObject
         })
+    }
+
+    _OnDownload(event) {
+        //console.log("Download is clicked");
+
+        // TODO: Download code....
     }
 
     render() {
@@ -50,10 +57,12 @@ class Content extends Component {
                     {sectionList}
                 </div>
                 <div id="Result-Container">
-                    <textarea rows="25" cols="100" wrap placeholder="add objects above and then press generate."
+                    <textarea rows="25" cols="100" placeholder="add objects above and then press generate."
                         value={this.state.tempObject.Objects.length > 0 ? JSON.stringify(this.state.tempObject) : ""} readOnly/>
                     <br/>
                     <button onClick={this._OnGenerate}>Generate</button>
+                    |
+                    <button onClick={this._OnDownload}>Download</button>
                     <br/>
                 </div>
             </React.Fragment>

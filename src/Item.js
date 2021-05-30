@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FieldType, Objects, PlaceholderValue } from './def/type';
+import { PlaceholderValue } from './def/type';
 import Field from './Field';
 import './style/Item.css';
 
@@ -10,10 +10,12 @@ class Item extends Component {
 
         this.state = {
             item: props.data,
+            itemName: props.data.Name.value,
             itemObject: null,
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this._fieldOnChange = this._fieldOnChange.bind(this);
     }
 
     componentDidMount() {
@@ -35,13 +37,21 @@ class Item extends Component {
         this.props.handleRemoveClick(this.state.item.id);
     }
 
+    _fieldOnChange(name, value) {
+        if (name.toLowerCase() === "name") {
+            this.setState({
+                itemName: value
+            });
+        }
+    }
+
     render() {
         if (this.state.itemObject === null) {
             return <></>;
         }
 
         let Item = this.state.item;
-        let ItemName = Item.Name.value != PlaceholderValue.NONE ? Item.Name.value : "undefined";
+        let ItemName = this.state.itemName === PlaceholderValue.NONE ? "undefined" : this.state.itemName;
 
         let DataList = [];
         for (let Property in Item)
@@ -58,12 +68,13 @@ class Item extends Component {
             DataList.push(newDataEntry);
         }
 
-        console.log(DataList);
+        //console.log(DataList);
         
         let FieldList = DataList.map(
-            (data) => {
+            (data, index) => {
+                let UKey = index+"_"+Item["id"];
                 return (
-                    <Field Key="" data={data} temp={this.state.itemObject} />
+                    <Field key={UKey} data={data} temp={this.state.itemObject} superOnChange={this._fieldOnChange}/>
                 )
             } 
         );

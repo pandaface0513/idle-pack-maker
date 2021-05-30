@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FieldType, Objects } from './def/type';
 
 import Item from './Item';
 
@@ -53,7 +52,7 @@ class Section extends Component {
             itemList: itemList
         });
 
-        console.log(newItem);
+        //console.log(newItem);
     }
 
     handleRemoveClick(removedId) {
@@ -72,7 +71,7 @@ class Section extends Component {
     _filterFromList(removedId, listToFilter) {
         let filtered = listToFilter.filter(
             value => {
-                return value.id != removedId;
+                return !(value.id === removedId);
             }
         );
 

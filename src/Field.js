@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FieldType, Objects } from './def/type';
+import { FieldType } from './def/type';
 import './style/Field.css';
 
 class Field extends Component {
@@ -9,7 +9,11 @@ class Field extends Component {
 
         this.state = {
             field: props.data,
+            value: props.data.value,
+            fieldObject: {}
         }
+
+        this._OnChange = this._OnChange.bind(this);
     }
 
     componentDidMount() {
@@ -20,7 +24,23 @@ class Field extends Component {
                 value: this.state.field.value,
             };
             this.props.temp.params.push(newFieldObject);
+
+            this.setState({
+                fieldObject: newFieldObject
+            });
         }
+    }
+
+    _OnChange(event) {
+        //console.log('Input ' + event.target.name + ' changed: ' + event.target.value);
+
+        this.state.fieldObject.value = event.target.value;
+
+        this.setState({
+            value: event.target.value
+        });
+
+        this.props.superOnChange(event.target.name, event.target.value);
     }
 
     render() {
@@ -47,7 +67,7 @@ class Field extends Component {
 
         return (
             <div className="Field">
-                {field ? field.name : "1"} : <input type={type} placeholder={field.value}/>
+                {field ? field.name : "1"} : <input name={field.name} type={type} placeholder={field.value} onChange={this._OnChange}/>
             </div>
         )
     }
